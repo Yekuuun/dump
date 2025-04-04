@@ -202,6 +202,6 @@ int main(int argc, char ** argv){
         return EXIT_FAILURE;
     }
 
-    cout << "[$] Ending DUMP !. CIAO... " << lpName << endl;
+    cout << "[$] Ending DUMP ! CIAO... " << endl;
     return EXIT_SUCCESS;
 }

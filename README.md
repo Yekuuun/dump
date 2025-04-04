@@ -20,5 +20,9 @@ Dump is a base cli tool aiming to easily dump a PE section & view informations a
 `pe.hpp` : a base lib containing PE manipulation functions (ReadFile, Load imports, Relocations).
 `main.cpp` : base file containe PeViewer class in charge of the dumping process.
 
+## Build & RUN : 
+
+Build program using `g++ main.cpp -o dump` & run it using : `./dump <path_to_pe> <.section>`
+
 ---
 <img src="https://github.com/NightFall-Security/Dump/blob/main/assets/demo.png" alt="DebugInfo" />
