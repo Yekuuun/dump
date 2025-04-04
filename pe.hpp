@@ -3,8 +3,6 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <iostream>
-#include <memory>
-#include <cstring>
 
 //PE mapping & loader needs.
 #define RELOC_32BIT_FIELD 3
@@ -25,6 +23,7 @@ typedef struct _BASE_RELOCATION_ENTRY {
 
 /**
  * Get ptr to NT HEADER.
+ * @param pImage => PTR to raw PE loaded
  */
 inline PIMAGE_NT_HEADERS GetNtHdr(IN PBYTE pImage){
     PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pImage;
@@ -34,6 +33,7 @@ inline PIMAGE_NT_HEADERS GetNtHdr(IN PBYTE pImage){
 
 /**
  * Base check on PE file.
+ * @param pImage => ptr to raw PE base
  */
 inline BOOL IsValidPeFile(IN PBYTE pImage){
     PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)pImage;
@@ -49,6 +49,9 @@ inline BOOL IsValidPeFile(IN PBYTE pImage){
 
 /**
  * Manually map pe sections.
+ * @param pRawPe => ptr to base address of raw pe
+ * @param pBuff  => ptr to base address of allocated mem (virtual)
+ * @param pNthdr => ptr to NT header
  */
 inline VOID MapSections(IN PBYTE pRawPe, IN PBYTE pBuff, IN PIMAGE_NT_HEADERS pNtHdr){
     //copying header.
@@ -62,6 +65,8 @@ inline VOID MapSections(IN PBYTE pRawPe, IN PBYTE pBuff, IN PIMAGE_NT_HEADERS pN
 
 /**
  * Loading PE imports.
+ * @param pBuff  => ptr to base buffer containing raw PE
+ * @param pNtHdr => ptr to NT header
  */
 inline BOOL LoadImports(IN PBYTE pBuff, IN PIMAGE_NT_HEADERS pNtHdr)
 {

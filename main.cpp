@@ -4,6 +4,8 @@
  * Github : https://github.com/NightFall-Security
  */
 
+#include <memory>
+#include <cstring>
 #include "pe.hpp"
 
 #define MAX_SECTION_NAME_LEN 8
@@ -22,6 +24,7 @@ class PeViewer {
         PBYTE pRawPe = nullptr;
         PBYTE pBuff  = nullptr;
 
+        //commong build objet properties.
         CHAR* cPath;
         CHAR* cSection;
 
@@ -58,6 +61,9 @@ class PeViewer {
             }
         }
 
+        /**
+         * Printing hex ascii when dumping section.
+         */
         VOID PrintHexAscii(const BYTE* data, DWORD size) {
             for (DWORD i = 0; i < size; i += BYTES_PER_LINE) {
                 printf("%08X  ", i);
@@ -196,6 +202,7 @@ int main(int argc, char ** argv){
         return EXIT_FAILURE;
     }
 
+    //dumping section.
     auto pe = std::make_unique<PeViewer>(lpPath, lpName);
     if (!pe->LoadAndDump()) {
         cout << "[!] Failed to load and dump section." << endl;
