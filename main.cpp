@@ -9,6 +9,9 @@
 #define MAX_SECTION_NAME_LEN 8
 #define BYTES_PER_LINE 16
 
+#define COLOR_PINK "\033[38;5;206m" //PINK.
+#define COLOR_RESET "\033[0m"
+
 using namespace std;
 
 /**
@@ -21,6 +24,20 @@ class PeViewer {
 
         CHAR* cPath;
         CHAR* cSection;
+
+        /**
+         * Displaying banner.
+         */
+        VOID DisplayBanner() {
+            std::cout << COLOR_PINK;
+            std::cout << "======================================" << std::endl;
+            std::cout << "        PE Section Dumper Tool        " << std::endl;
+            std::cout << "======================================" << std::endl;
+            std::cout << " File: " << this->cPath << std::endl;
+            std::cout << " Section: " << this->cSection << std::endl;
+            std::cout << "======================================" << std::endl;
+            std::cout << COLOR_RESET;
+        }
 
         /**
          * Freeing memory allocated for PE file (raw & in mem.)
@@ -149,6 +166,8 @@ class PeViewer {
          * Load & dump informations.
          */
         BOOL LoadAndDump(){
+            this->DisplayBanner();
+
             if(!this->Load() || this->pBuff == nullptr)
                 return false;
             
