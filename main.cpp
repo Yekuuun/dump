@@ -131,6 +131,8 @@ class PeViewer {
             if(this->pRawPe == nullptr)
                 return false;
             
+            cout << "[*] Loading file into memory... " << endl;
+            
             //loading it into memory.
             PIMAGE_DOS_HEADER pDos = (PIMAGE_DOS_HEADER)this->pRawPe;
             PIMAGE_NT_HEADERS pNtHdr  = (PIMAGE_NT_HEADERS)(this->pRawPe + pDos->e_lfanew);
@@ -147,6 +149,7 @@ class PeViewer {
             }
 
             MapSections(this->pRawPe, this->pBuff, pNtHdr);
+            cout << "[*] Successfully mapped sections." << endl;
         
             if(!Relocate(this->pBuff, pNtHdr, (FIELD_PTR)this->pBuff)){
                 cout << "[*] Error applying relocations." << endl;
